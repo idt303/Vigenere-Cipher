@@ -13,8 +13,7 @@ public class VigenereCipher {
         //Getting user action
         boolean isEncrypting = false;
         int choice = 0; // from int to string
-        //The 2 only actions are encrypt and decrypt. The user wont continue until he choose one of them
-        // edit: instead of writing encrypt or decrypt write 1 for encrypt and 2 for decrypt
+        //write 1 for encrypt and 2 for decrypt
         while ((choice != 1 && choice != 2)) {
             System.out.println("Do you want to encrypt (1) or decrypt (2)?");
             choice = scanner.nextInt();
