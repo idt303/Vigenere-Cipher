@@ -1,7 +1,5 @@
 import java.util.Scanner;
-
 public class VigenereCipher {
-
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
 
@@ -14,20 +12,21 @@ public class VigenereCipher {
 
         //Getting user action
         boolean isEncrypting = false;
-        String choice = "";
+        int choice = 0; // from int to string
         //The 2 only actions are encrypt and decrypt. The user wont continue until he choose one of them
-        while (!(choice.equals("encrypt") || choice.equals("decrypt"))) {
-            System.out.println("Do you want to encrypt or decrypt?");
-            choice = (scanner.nextLine()).toLowerCase();
-            if (choice.equals("encrypt"))
+        // edit: instead of writing encrypt or decrypt write 1 for encrypt and 2 for decrypt
+        while ((choice != 1 && choice != 2)) {
+            System.out.println("Do you want to encrypt (1) or decrypt (2)?");
+            choice = scanner.nextInt();
+            if (choice == 1)
                 isEncrypting = true;
-            else if (choice.equals("decrypt"))
+            else if (choice == 2)
                 isEncrypting = false;
             else
-                System.out.println("Please enter the action you want to preform (encrypt/decrypt)");
+                System.out.println("Please enter the action you want to preform (1 for encrypt or 2 for decrypt)");
         }
-
         System.out.println("Please enter the key: ");
+        scanner.nextLine();
         key = scanner.nextLine().toLowerCase();
 
         String output;
@@ -37,7 +36,6 @@ public class VigenereCipher {
             output = encrypt(input, key);
         else
             output = decrypt(input, key);
-
         System.out.println("Output: ");
         System.out.println(output);
     }
@@ -57,7 +55,7 @@ public class VigenereCipher {
         for (int i = 0; i < str.length(); i++) {
             //Special letter case. the encryption skips this kind of letters
             if (str.charAt(i) == ' ' || str.charAt(i) == '.' || str.charAt(i) == '!' || str.charAt(i) == ','
-                || str.charAt(i) == '(' || str.charAt(i) == ')') {
+                    || str.charAt(i) == '(' || str.charAt(i) == ')') {
                 output += str.charAt(i);
             }
             else {
@@ -77,11 +75,11 @@ public class VigenereCipher {
                 j++;
             }
         }
-
         return output;
     }
     public static String decrypt(String str, String key)
     {
+
         //Adding 'Z' to the string if it length is shorter than the key
         for (int i = str.length(); i < key.length(); i++){
             str += "Z";
@@ -109,13 +107,10 @@ public class VigenereCipher {
                 int difference = (str.charAt(i)+"").toLowerCase().charAt(0) - (key.charAt(j % key.length())+"").toLowerCase().charAt(0);
                 //If we subtract a letter that is larger than the current letter
                 //we want to continue backwards from z back to a
-
                 //The (str.charAt(index)+"").toLowerCase().charAt(0) is a tricky way of using toLowerCase
                 //on chars. we convert it to string by + "" then we use toLowerCase function
                 //and then because we only have one letter we can convert it back to char
                 // using charAt(0)
-
-
                 if (difference < 0) { //The case were we go backwards from z to a
                     output += isCapital ? (char) ('Z' + difference + 1) : (char) ('z' + difference + 1);
                 } else
@@ -123,9 +118,7 @@ public class VigenereCipher {
                 j++;
             }
         }
-
         return output;
     }
-
 
 }
